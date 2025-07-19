@@ -1,0 +1,10 @@
+<app-students-table
+  [students]="students"
+  (editar)="onEditar($event)">
+</app-students-table>
+
+<app-edit-form
+  *ngIf="estudianteEditando"
+  [estudiante]="estudianteEditando"
+  (guardar)="onGuardarEditado($event)">
+</app-edit-form>

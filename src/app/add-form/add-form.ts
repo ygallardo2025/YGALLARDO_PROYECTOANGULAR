@@ -18,9 +18,9 @@ export class AddFormComponent implements OnChanges {
   constructor(private fb: FormBuilder) {
     this.studentForm = this.fb.group({
       id: [null],
-      dni: ['', Validators.required],
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
+      dni: ['', [Validators.required, Validators.minLength(5)]],
+      name: ['', [Validators.required, Validators.pattern('^[A-Za-z ]+$')]],
+      surname: ['', [Validators.required, Validators.pattern('^[A-Za-z ]+$')]],
       age: [null, [Validators.required, Validators.min(0)]],
       average: [null, [Validators.required, Validators.min(0), Validators.max(10)]],
     });

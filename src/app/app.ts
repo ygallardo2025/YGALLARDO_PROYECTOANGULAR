@@ -4,7 +4,7 @@ import { Toolbar } from './toolbar/toolbar';
 import { Navbar } from './navbar/navbar';
 import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
-import { StudentsTable } from '../feature/student/students-table/students-table';
+import { StudentsTableComponent } from '../app/students-table/students-table';
 import { StudentFormComponent } from "./add-form/add-form"; // corregido path
 import { Student } from './shared/entities';
 
@@ -16,10 +16,8 @@ import { Student } from './shared/entities';
     Toolbar,
     Navbar,
     CommonModule,
-    StudentsTable,
-    StudentFormComponent,
     HttpClientModule
-  ],
+],
   templateUrl: './app.html',
   styleUrls: ['./app.scss'] // corregido aquí
 })

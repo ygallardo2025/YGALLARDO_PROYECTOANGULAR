@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Student } from '../shared/entities';
 import { CommonModule } from '@angular/common';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-student-form',
@@ -17,7 +18,7 @@ export class StudentFormComponent implements OnChanges {
 
   studentForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private snackBar: MatSnackBar) {
     this.studentForm = this.fb.group({
       id: [null],
       dni: ['', [Validators.required, Validators.minLength(5)]],
@@ -53,6 +54,10 @@ export class StudentFormComponent implements OnChanges {
     this.studentForm.markAllAsTouched();
     if (this.studentForm.valid) {
       this.formSubmitted.emit(this.studentForm.value);
+      this.snackBar.open('Estudiante agregado correctamente', 'Cerrar', {
+        duration: 3000,
+        verticalPosition: 'top'
+      });
       this.studentForm.reset();
     }
   }

@@ -1,10 +1,10 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Student } from '../shared/entities';
-import { StudentsTable } from "../../feature/student/students-table/students-table";
+import { StudentsTableComponent } from "../students-table/students-table";
 
 @Component({
   selector: 'app-edit-form',
-  imports: [StudentsTable],
+  imports: [StudentsTableComponent],
   templateUrl: './edit-form.html',
   styleUrl: './edit-form.scss',
   standalone: true

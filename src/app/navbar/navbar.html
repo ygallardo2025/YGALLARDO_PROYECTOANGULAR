@@ -1,21 +1,28 @@
-
-  <div class="navbar p-3 bg-light rounded shadow-sm mb-3">
-    <h2 class="h5 mb-3">
-      <i class="bi bi-gear-fill me-2 text-primary"></i>Acciones
-    </h2>
-    <ul class="list-group">
-      <li class="list-group-item d-flex align-items-center">
-        <i class="bi bi-list-ul me-2 text-secondary"></i> Ver lista estudiantes
-      </li>
-      <li class="list-group-item d-flex align-items-center">
-        <i class="bi bi-person-plus-fill me-2 text-success"></i> Agregar
-      </li>
-      <li class="list-group-item d-flex align-items-center">
-        <i class="bi bi-trash-fill me-2 text-danger"></i> Eliminar
-      </li>
-      <li class="list-group-item d-flex align-items-center">
-        <i class="bi bi-pencil-square me-2 text-warning"></i> Modificar
-      </li>
-    </ul>
+<nav class="sidebar bg-primary text-white vh-100 p-3">
+  <div class="sidebar-header mb-4">
+    <h4 class="fw-bold">Menú</h4>
   </div>
+  <ul class="nav flex-column">
+    <li class="nav-item mb-2">
+      <a class="nav-link text-white" routerLink="/dashboard" routerLinkActive="active">
+        <i class="bi bi-grid-fill me-2"></i> Dashboard
+      </a>
+    </li>
+    <li class="nav-item mb-2">
+      <a class="nav-link text-white" routerLink="/students" routerLinkActive="active">
+        <i class="bi bi-people-fill me-2"></i> Estudiantes
+      </a>
+    </li>
+    <li class="nav-item mb-2">
+      <a class="nav-link text-white" routerLink="/add-student" routerLinkActive="active">
+        <i class="bi bi-person-plus-fill me-2"></i> Agregar Estudiante
+      </a>
+    </li>
+    <!--<li class="nav-item mb-2">
+      <a class="nav-link text-white" routerLink="/stats" routerLinkActive="active">
+        <i class="bi bi-bar-chart-fill me-2"></i> Estadísticas
+      </a>
+    </li>-->
+  </ul>
+</nav>
 

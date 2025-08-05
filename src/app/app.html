@@ -1,28 +1,15 @@
 <!-- app.component.html -->
 
-<div class="app-container">
-  <!-- Sidebar lateral -->
-  <nav class="sidebar">
-    <h3>Menú</h3>
-    <ul>
-      <li><a routerLink="/alumnos" routerLinkActive="active">Alumnos</a></li>
-      <li><a routerLink="/cursos" routerLinkActive="active">Cursos</a></li>
-      <li><a routerLink="/inscripciones" routerLinkActive="active">Inscripciones</a></li>
-    </ul>
-  </nav>
+<div class="app-layout" style="display: flex; min-height: 100vh;">
+  <!-- Sidebar -->
+  <app-navbar></app-navbar>
 
   <!-- Contenido principal -->
-  <div class="main-content">
-    <!-- Toolbar y navbar -->
+  <div class="main-content" style="flex: 1; background: #f9f7fa;">
     <app-toolbar class="toolbar"></app-toolbar>
-    <app-navbar class="navbar"></app-navbar>
-
-    <!-- Área dinámica de contenido -->
-    <div class="content">
+    <div class="content" style="padding: 2rem;">
       <router-outlet></router-outlet>
     </div>
-
-    <!-- Footer -->
     <div class="footer mt-4">
       <p class="text-center">© 2025 Proyecto Angular - Estudiantes</p>
       <p class="text-center">Desarrollado por ygallardo</p>

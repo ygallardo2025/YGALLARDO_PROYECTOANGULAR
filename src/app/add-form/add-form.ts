@@ -1,19 +1,19 @@
 import { Component, Input, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, Validators ,ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Student } from '../shared/entities';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-add-form',
-   standalone: true,
+  selector: 'app-student-form',
+  standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './add-form.html',
-  styleUrls: ['./add-form.scss'],
-
+  styleUrls: ['./add-form.scss']
 })
-export class AddFormComponent implements OnChanges {
+export class StudentFormComponent implements OnChanges {
   @Input() estudiante: Student | null = null;
-  @Output() studentAdded  = new EventEmitter<Student>();
+  @Output() formSubmitted = new EventEmitter<Student>();
+  @Output() cancel = new EventEmitter<void>();  // Opcional para cancelar edición
 
   studentForm: FormGroup;
 
@@ -31,37 +31,38 @@ export class AddFormComponent implements OnChanges {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['estudiante'] && this.estudiante) {
       this.studentForm.patchValue(this.estudiante);
+    } else if (!this.estudiante) {
+      this.studentForm.reset(); // Resetea si cambia el estudiante a null (modo añadir)
     }
   }
 
   getErrorMessage(controlName: string): string | null {
-  const ctrl = this.studentForm.get(controlName);
-  if (!ctrl || !ctrl.errors || !(ctrl.touched || ctrl.dirty)) return null;
-  const errs = ctrl.errors;
+    const ctrl = this.studentForm.get(controlName);
+    if (!ctrl || !ctrl.errors || !(ctrl.touched || ctrl.dirty)) return null;
+    const errs = ctrl.errors;
 
-  if (errs['required']) return 'Este campo es obligatorio.';
-  if (errs['minlength']) return `Mínimo ${errs['minlength'].requiredLength} caracteres.`;
-  if (errs['min']) return `El valor mínimo es ${errs['min'].min}.`;
-  if (errs['max']) return `El valor máximo es ${errs['max'].max}.`;
-  if (errs['pattern']) {
-    if (controlName === 'dni') {
-      return 'Sólo se permiten números y debe tener al menos 5 dígitos.';
-    }
-    return 'Formato inválido.';
+    if (errs['required']) return 'Este campo es obligatorio.';
+    if (errs['minlength']) return `Mínimo ${errs['minlength'].requiredLength} caracteres.`;
+    if (errs['min']) return `El valor mínimo es ${errs['min'].min}.`;
+    if (errs['max']) return `El valor máximo es ${errs['max'].max}.`;
+    if (errs['pattern']) return 'Formato inválido.';
+    return null;
   }
-  return null;
-}
 
   onSubmit() {
-  this.studentForm.markAllAsTouched();
-  if (this.studentForm.valid) {
-    this.studentAdded.emit(this.studentForm.value);
-    this.studentForm.reset();
+    this.studentForm.markAllAsTouched();
+    if (this.studentForm.valid) {
+      this.formSubmitted.emit(this.studentForm.value);
+      this.studentForm.reset();
+    }
   }
-}
+
   onReset() {
     this.studentForm.reset();
   }
 
-  
+  onCancelEdit() {
+    this.cancel.emit();
+    this.studentForm.reset();
+  }
 }

@@ -1,30 +1,32 @@
-<div class="container">
-  <app-toolbar class="toolbar"></app-toolbar>
-  <app-navbar class="navbar"></app-navbar>
+<!-- app.component.html -->
 
-  <div class="content">
-    <app-students-table 
-      [students]="students"
-      (eliminar)="eliminarEstudiante($event)"
-      (editar)="editarEstudiante($event)">
-    </app-students-table>
+<div class="app-container">
+  <!-- Sidebar lateral -->
+  <nav class="sidebar">
+    <h3>Menú</h3>
+    <ul>
+      <li><a routerLink="/alumnos" routerLinkActive="active">Alumnos</a></li>
+      <li><a routerLink="/cursos" routerLinkActive="active">Cursos</a></li>
+      <li><a routerLink="/inscripciones" routerLinkActive="active">Inscripciones</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contenido principal -->
+  <div class="main-content">
+    <!-- Toolbar y navbar -->
+    <app-toolbar class="toolbar"></app-toolbar>
+    <app-navbar class="navbar"></app-navbar>
+
+    <!-- Área dinámica de contenido -->
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer mt-4">
+      <p class="text-center">© 2025 Proyecto Angular - Estudiantes</p>
+      <p class="text-center">Desarrollado por ygallardo</p>
+      <p class="text-center">Todos los derechos reservados</p>
+    </div>
   </div>
-
-  <app-add-form 
-    [estudiante]="estudianteParaEditar"
-    (studentAdded)="addStudent($event)">
-  </app-add-form>
-</div>
-
-<div>
-  <hr>
-    <h1 class="text-center">JSON de Estudiantes:</h1>
-    <p class="text-center">{{ students | json }}</p>
-    <hr>
-</div>
-
-<div class="footer mt-4">
-  <p class="text-center">© 2025 Proyecto Angular - Estudiantes</p>
-  <p class="text-center">Desarrollado por ygallardo</p>
-  <p class="text-center">Todos los derechos reservados</p>
 </div>

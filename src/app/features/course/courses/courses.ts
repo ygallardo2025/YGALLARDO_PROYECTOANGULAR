@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BehaviorSubject } from 'rxjs';
 import { Course } from '../../../shared/entities';
+import { BehaviorSubject } from 'rxjs';
 import { CoursesTableComponent } from '../courses-table/courses-table';
 import { CourseFormComponent } from '../course-form/course-form';
 
@@ -9,31 +9,16 @@ import { CourseFormComponent } from '../course-form/course-form';
   selector: 'app-courses',
   standalone: true,
   imports: [CommonModule, CoursesTableComponent, CourseFormComponent],
-  templateUrl: './courses.html',
-  styleUrls: ['./courses.scss']
+  templateUrl: './courses.html'
 })
 export class CoursesComponent {
-  private coursesSubject = new BehaviorSubject<Course[]>([]);
+  private coursesSubject = new BehaviorSubject<Course[]>([
+    { id: 1, title: 'Angular', description: 'Curso de Angular' },
+    { id: 2, title: 'React', description: 'Curso de React' }
+  ]);
   courses$ = this.coursesSubject.asObservable();
-  courseToEdit: Course | null = null;
 
-  saveCourse(course: Course) {
-    const current = this.coursesSubject.value;
-    let updated: Course[];
-    if (course.id) {
-      const index = current.findIndex(c => c.id === course.id);
-      if (index !== -1) {
-        updated = current.map(c => (c.id === course.id ? { ...course } : c));
-      } else {
-        updated = current;
-      }
-    } else {
-      const newCourse = { ...course, id: this.generateNewId(current) };
-      updated = [...current, newCourse];
-    }
-    this.coursesSubject.next(updated);
-    this.courseToEdit = null;
-  }
+  courseToEdit: Course | null = null;
 
   editCourse(course: Course) {
     this.courseToEdit = { ...course };
@@ -42,10 +27,24 @@ export class CoursesComponent {
   deleteCourse(course: Course) {
     const updated = this.coursesSubject.value.filter(c => c.id !== course.id);
     this.coursesSubject.next(updated);
+
+    if (this.courseToEdit?.id === course.id) {
+      this.courseToEdit = null;
+    }
   }
 
-  private generateNewId(current: Course[]): number {
-    return current.length > 0 ? Math.max(...current.map(c => c.id)) + 1 : 1;
+  saveCourse(course: Course) {
+    const current = this.coursesSubject.value;
+    if (course.id) {
+      // Editar
+      const updated = current.map(c => c.id === course.id ? course : c);
+      this.coursesSubject.next(updated);
+    } else {
+      // Agregar
+      const newId = Math.max(...current.map(c => c.id ?? 0), 0) + 1;
+      this.coursesSubject.next([...current, { ...course, id: newId }]);
+    }
+
+    this.courseToEdit = null;
   }
 }
-

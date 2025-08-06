@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./students-table.scss']
 })
 export class StudentsTableComponent {
-  @Input() students: Student[] | null = [];
+  @Input() students: Student[] = [];
   
   @Output() eliminar = new EventEmitter<Student>();
   @Output() editar = new EventEmitter<Student>();

@@ -1,12 +1,14 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { Student } from '../entities'; // Asegúrate de usar la ruta correcta
 
 @Pipe({
-  name: 'fullname'
+  name: 'fullname',
+  standalone: true // ← importante si estás usando standalone components
 })
 export class FullnamePipe implements PipeTransform {
 
-  transform(name: string, surname:string): unknown {
-    return `${name} ${surname}`;
+  transform(student: Student): string {
+    return `${student.name} ${student.surname}`;
   }
 
 }

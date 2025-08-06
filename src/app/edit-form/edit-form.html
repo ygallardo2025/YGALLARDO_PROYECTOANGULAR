@@ -1,10 +1,30 @@
-<app-students-table
-  [students]="students"
-  (editar)="onEditar($event)">
-</app-students-table>
+<div *ngIf="estudiante">
+  <form (ngSubmit)="guardarCambios()">
+    <div class="mb-2">
+      <label>Nombre</label>
+      <input type="text" class="form-control" [(ngModel)]="estudiante!.name" name="name" required>
+    </div>
 
-<app-edit-form
-  *ngIf="estudianteEditando"
-  [estudiante]="estudianteEditando"
-  (guardar)="onGuardarEditado($event)">
-</app-edit-form>
+    <div class="mb-2">
+      <label>Apellido</label>
+      <input type="text" class="form-control" [(ngModel)]="estudiante!.surname" name="surname" required>
+    </div>
+
+    <div class="mb-2">
+      <label>DNI</label>
+      <input type="text" class="form-control" [(ngModel)]="estudiante!.dni" name="dni" required>
+    </div>
+
+    <div class="mb-2">
+      <label>Edad</label>
+      <input type="number" class="form-control" [(ngModel)]="estudiante!.age" name="age" required>
+    </div>
+
+    <div class="mb-2">
+      <label>Promedio</label>
+      <input type="number" class="form-control" [(ngModel)]="estudiante!.average" name="average" required>
+    </div>
+
+    <button type="submit" class="btn btn-success mt-2">Guardar</button>
+  </form>
+</div>

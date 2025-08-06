@@ -10,7 +10,7 @@ import { Course } from '../../../shared/entities';
   styleUrls: ['./courses-table.scss']
 })
 export class CoursesTableComponent {
-  @Input() courses: Course[] = [];
+  @Input() courses: Course[]  | null = null;
 
   displayedColumns: string[] = ['title', 'description', 'actions'];
 

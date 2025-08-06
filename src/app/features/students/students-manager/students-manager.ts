@@ -51,9 +51,23 @@ export class StudentsManagerComponent {
     this.estudianteEditando = null;
   }
 
+  onNuevo() {
+  this.estudianteEditando = {
+    id: 0, // se generará nuevo ID después
+    name: '',
+    surname: '',
+    dni: '',
+    age: 0,
+    average: 0
+  }
+}
+
   private generarNuevoId(current: Student[]): number {
     return current.length > 0
       ? Math.max(...current.map(s => s.id)) + 1
       : 1;
   }
+  get studentsList(): Student[] {
+  return this.studentsSubject.value;
+}
 }

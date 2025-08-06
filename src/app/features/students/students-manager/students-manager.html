@@ -1,10 +1,11 @@
 <!-- Tabla de estudiantes -->
-<app-students-table
-  [students]="students$ | async"
-  (editar)="onEditar($event)"
-  (eliminar)="onEliminar($event)">
-</app-students-table>
-
+<ng-container *ngIf="students$ | async as students">
+  <app-students-table
+    [students]="students"
+    (editar)="onEditar($event)"
+    (eliminar)="onEliminar($event)">
+  </app-students-table>
+</ng-container>
 <!-- Formulario de edición -->
 <app-edit-form
   *ngIf="estudianteEditando"

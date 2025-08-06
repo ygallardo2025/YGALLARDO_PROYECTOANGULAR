@@ -1,0 +1,98 @@
+ 
+{
+  "students": [
+    {
+      "id": "9",
+      "name": "Diego",
+      "surname": "Gutiérrez",
+      "age": 22,
+      "rut": 22334455,
+      "average": 8.7
+    },
+    {
+      "id": "10",
+      "name": "Valentina",
+      "surname": "Sánchez",
+      "age": 19,
+      "rut": 55667799,
+      "average": 9.3
+    },
+    {
+      "id": "11",
+      "name": "Carlos",
+      "surname": "Ramírez",
+      "age": 23,
+      "rut": 99887766,
+      "average": 8.2
+    },
+    {
+      "id": "12",
+      "name": "Isabella",
+      "surname": "Morales",
+      "age": 20,
+      "rut": 11223344,
+      "average": 9
+    },
+    {
+      "id": "13",
+      "name": "Mateo",
+      "surname": "Castro",
+      "age": 21,
+      "rut": 44332211,
+      "average": 7.9
+    },
+    {
+      "id": "16",
+      "name": "Gabriela",
+      "surname": "Rojas",
+      "age": 23,
+      "rut": 66554433,
+      "average": 8.1
+    },
+    {
+      "id": "17",
+      "name": "Fernando",
+      "surname": "García",
+      "age": 20,
+      "rut": 33445566,
+      "average": 9.2
+    },
+    {
+      "id": "18",
+      "name": "Natalia",
+      "surname": "López",
+      "age": 21,
+      "rut": 22334455,
+      "average": 7.6
+    }
+  ]
+,
+  "courses": [
+    {
+      "id": "1",
+      "title": "Matemáticas",
+      "description": "Curso de matemáticas avanzadas"
+    },
+    {
+      "id": "2",
+      "title": "Lengua y Literatura",
+      "description": "Curso de lengua y literatura"
+    },
+    {
+      "id": "3",
+      "title": "Ciencias",
+      "description": "Curso de ciencias naturales"
+    },
+    {
+      "id": "4",
+      "title": "Historia",
+      "description": "Curso de historia mundial"
+    },
+    {
+      "id": "5",
+      "title": "Educación Física",
+      "description": "Curso de educación física"
+    }
+  ]
+}
+ 

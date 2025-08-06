@@ -1,14 +1,15 @@
-<!-- Tabla de estudiantes -->
-<ng-container *ngIf="students$ | async as students">
-  <app-students-table
-    [students]="students"
-    (editar)="onEditar($event)"
-    (eliminar)="onEliminar($event)">
-  </app-students-table>
-</ng-container>
-<!-- Formulario de edición -->
-<app-edit-form
-  *ngIf="estudianteEditando"
-  [estudiante]="estudianteEditando"
-  (guardar)="onGuardarEditado($event)">
-</app-edit-form>
+<div class="container">
+  <app-student-form
+    [estudiante]="estudianteEditando"
+    (formSubmitted)="onGuardarEditado($event)"
+    (cancel)="onCancelar()">
+  </app-student-form>
+
+  <ng-container *ngIf="students$ | async as students">
+    <app-students-table
+      [students]="students"
+      (editar)="onEditar($event)"
+      (eliminar)="onEliminar($event)">
+    </app-students-table>
+  </ng-container>
+</div>

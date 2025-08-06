@@ -3,14 +3,14 @@ import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { Student } from '../../../shared/entities';
 import { StudentsTableComponent } from '../students-table/students-table';
-import { EditForm } from '../../../edit-form/edit-form';
+import { StudentFormComponent } from '../../../add-form/add-form';
 @Component({
   selector: 'app-students-manager',
   standalone: true,
   imports: [
     CommonModule,
     StudentsTableComponent,
-    EditForm
+    StudentFormComponent
   ],
   templateUrl: './students-manager.html',
   styleUrls: ['./students-manager.scss']
@@ -51,23 +51,13 @@ export class StudentsManagerComponent {
     this.estudianteEditando = null;
   }
 
-  onNuevo() {
-  this.estudianteEditando = {
-    id: 0, // se generará nuevo ID después
-    name: '',
-    surname: '',
-    dni: '',
-    age: 0,
-    average: 0
-  }
-}
-
   private generarNuevoId(current: Student[]): number {
     return current.length > 0
       ? Math.max(...current.map(s => s.id)) + 1
       : 1;
   }
+
   get studentsList(): Student[] {
-  return this.studentsSubject.value;
-}
+    return this.studentsSubject.value;
+  }
 }

@@ -1,4 +1,31 @@
-<div class="container">
-  <app-course-form [course]="courseToEdit" (save)="saveCourse($event)"></app-course-form>
-  <app-courses-table [courses]="courses$ | async" (eliminar)="deleteCourse($event)" (editar)="editCourse($event)"></app-courses-table>
+<div class="container mt-4">
+
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Listado de cursos</h4>
+  </div>
+
+  <!-- Formulario de curso -->
+  <div class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">
+        {{ courseToEdit?.id === 0 ? 'Añadir curso' : 'Editar curso' }}
+      </h5>
+      <app-course-form
+        [course]="courseToEdit"
+        (save)="saveCourse($event)">
+      </app-course-form>
+    </div>
+  </div>
+
+  <!-- Tabla de cursos -->
+  <div class="card">
+    <div class="card-body">
+      <app-courses-table
+        [courses]="courses$ | async"
+        (editar)="editCourse($event)"
+        (eliminar)="deleteCourse($event)">
+      </app-courses-table>
+    </div>
+  </div>
 </div>

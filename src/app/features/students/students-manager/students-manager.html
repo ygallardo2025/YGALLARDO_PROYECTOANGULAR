@@ -1,10 +1,11 @@
-<div class="container">
-  <app-student-form
-    [estudiante]="estudianteEditando"
-    (formSubmitted)="onGuardarEditado($event)"
-    (cancel)="onCancelar()">
-  </app-student-form>
+<div class="container mt-4">
+  <!-- Encabezado -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4 class="mb-0">Listado de estudiantes</h4>
+    <button class="btn btn-primary" (click)="nuevoEstudiante()">Añadir estudiante</button>
+  </div>
 
+  <!-- Tabla de estudiantes -->
   <ng-container *ngIf="students$ | async as students">
     <app-students-table
       [students]="students"
@@ -12,4 +13,18 @@
       (eliminar)="onEliminar($event)">
     </app-students-table>
   </ng-container>
+
+  <!-- Formulario (editar o agregar) -->
+  <div class="card mt-4" *ngIf="estudianteEditando">
+    <div class="card-body">
+      <h5 class="card-title">
+        {{ estudianteEditando.id === 0 ? 'Añadir estudiante' : 'Editar estudiante' }}
+      </h5>
+
+      <app-student-form
+        [student]="estudianteEditando"
+        (save)="onGuardarEditado($event)">
+      </app-student-form>
+    </div>
+  </div>
 </div>

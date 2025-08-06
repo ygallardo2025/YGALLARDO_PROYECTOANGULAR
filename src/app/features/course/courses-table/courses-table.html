@@ -1,22 +1,21 @@
-<table mat-table [dataSource]="courses ?? []" class="table table-bordered table-striped table-hover">
-  <ng-container matColumnDef="title">
-    <th mat-header-cell *matHeaderCellDef class="text-center"> Título </th>
-    <td mat-cell *matCellDef="let element" class="text-center"> {{element.title}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="description">
-    <th mat-header-cell *matHeaderCellDef class="text-center"> Descripción </th>
-    <td mat-cell *matCellDef="let element" class="text-center"> {{element.description}} </td>
-  </ng-container>
-
-  <ng-container matColumnDef="actions">
-    <th mat-header-cell *matHeaderCellDef class="text-center"> Acciones </th>
-    <td mat-cell *matCellDef="let element" class="text-center">
-      <button class="btn btn-danger btn-sm me-2" (click)="eliminarCurso(element)">Eliminar</button>
-      <button class="btn btn-primary btn-sm" (click)="editarCurso(element)">Editar</button>
-    </td>
-  </ng-container>
-
-  <tr mat-header-row *matHeaderRowDef="displayedColumns" class="table-primary"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-</table>
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead class="table-primary">
+      <tr>
+        <th>Título</th>
+        <th>Descripción</th>
+        <th class="text-center">Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let course of courses ?? []">
+        <td>{{ course.title }}</td>
+        <td>{{ course.description }}</td>
+        <td class="text-center">
+          <button class="btn btn-sm btn-warning me-2" (click)="editarCurso(course)">Editar</button>
+          <button class="btn btn-sm btn-danger" (click)="eliminarCurso(course)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

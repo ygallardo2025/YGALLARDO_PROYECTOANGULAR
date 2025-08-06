@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { Course } from '../../../shared/entities';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-courses-table',
   standalone: true,
-  imports: [MatTableModule],
+  imports: [MatTableModule,CommonModule  ],
   templateUrl: './courses-table.html',
   styleUrls: ['./courses-table.scss']
 })

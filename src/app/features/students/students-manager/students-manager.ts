@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { BehaviorSubject } from 'rxjs';
 import { Student } from '../../../shared/entities';
 import { StudentsTableComponent } from '../students-table/students-table';
-import { StudentFormComponent } from '../../../add-form/add-form';
+import { StudentFormComponent } from '../../../features/students/students-form/student-form';
+
 @Component({
   selector: 'app-students-manager',
   standalone: true,
@@ -16,13 +17,24 @@ import { StudentFormComponent } from '../../../add-form/add-form';
   styleUrls: ['./students-manager.scss']
 })
 export class StudentsManagerComponent {
+  estudianteEditando: Student | null = null;
+
   private studentsSubject = new BehaviorSubject<Student[]>([
     { id: 1, name: 'Juan', surname: 'Pérez', age: 20, dni: '12345678', average: 8 },
     { id: 2, name: 'Ana', surname: 'Gómez', age: 21, dni: '23456789', average: 9 }
   ]);
   students$ = this.studentsSubject.asObservable();
 
-  estudianteEditando: Student | null = null;
+  nuevoEstudiante() {
+    this.estudianteEditando = {
+      id: 0,
+      name: '',
+      surname: '',
+      dni: '',
+      age: 0,
+      average: 0
+    };
+  }
 
   onEditar(estudiante: Student) {
     this.estudianteEditando = { ...estudiante };
@@ -32,12 +44,14 @@ export class StudentsManagerComponent {
     const current = this.studentsSubject.value;
     const index = current.findIndex(s => s.id === estudiante.id);
     let updated: Student[];
+
     if (index !== -1) {
-      updated = current.map(s => (s.id === estudiante.id ? { ...estudiante } : s));
+      updated = current.map(s => s.id === estudiante.id ? { ...estudiante } : s);
     } else {
       const nuevo = { ...estudiante, id: this.generarNuevoId(current) };
       updated = [...current, nuevo];
     }
+
     this.studentsSubject.next(updated);
     this.estudianteEditando = null;
   }
@@ -47,17 +61,9 @@ export class StudentsManagerComponent {
     this.studentsSubject.next(updated);
   }
 
-  onCancelar() {
-    this.estudianteEditando = null;
-  }
-
   private generarNuevoId(current: Student[]): number {
     return current.length > 0
       ? Math.max(...current.map(s => s.id)) + 1
       : 1;
-  }
-
-  get studentsList(): Student[] {
-    return this.studentsSubject.value;
   }
 }

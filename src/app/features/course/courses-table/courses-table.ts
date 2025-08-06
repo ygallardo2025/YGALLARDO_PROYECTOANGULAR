@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
-import { Course } from '../../shared/entities';
+import { Course } from '../../../shared/entities';
 
 @Component({
   selector: 'app-courses-table',

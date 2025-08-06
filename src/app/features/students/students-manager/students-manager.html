@@ -1,7 +1,8 @@
 <!-- Tabla de estudiantes -->
 <app-students-table
-  [students]="students"
-  (editar)="onEditar($event)">
+  [students]="students$ | async"
+  (editar)="onEditar($event)"
+  (eliminar)="onEliminar($event)">
 </app-students-table>
 
 <!-- Formulario de edición -->

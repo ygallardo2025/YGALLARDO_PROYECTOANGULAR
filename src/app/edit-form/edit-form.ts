@@ -1,6 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Student } from '../shared/entities';
-import { StudentsTableComponent } from "../students-table/students-table";
+import { StudentsTableComponent } from "../features/students/students-table/students-table";
 
 @Component({
   selector: 'app-edit-form',

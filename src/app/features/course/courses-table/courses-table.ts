@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./courses-table.scss']
 })
 export class CoursesTableComponent {
-  @Input() courses: Course[]  | null = null;
+  @Input() courses: Course[]| null = null;
 
   displayedColumns: string[] = ['title', 'description', 'actions'];
 

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Student } from '../../app/shared/entities';
+import { Student } from '../../../shared/entities';
 
 @Component({
   selector: 'app-students-manager',

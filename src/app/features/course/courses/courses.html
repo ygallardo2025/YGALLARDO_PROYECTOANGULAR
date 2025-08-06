@@ -1,0 +1,4 @@
+<div class="container">
+  <app-course-form [course]="courseToEdit" (save)="saveCourse($event)"></app-course-form>
+  <app-courses-table [courses]="courses$ | async" (eliminar)="deleteCourse($event)" (editar)="editCourse($event)"></app-courses-table>
+</div>

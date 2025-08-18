@@ -1,3 +1,13 @@
+export type Role = 'admin' | 'user';
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: Role;
+  token: string;
+}
+
 export interface Student {
   id: number;
   name: string;

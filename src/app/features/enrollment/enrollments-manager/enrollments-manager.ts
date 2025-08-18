@@ -22,7 +22,7 @@ export class EnrollmentsManagerComponent implements OnInit {
 
   editing: Enrollment | null = null;
 
-  constructor(
+   constructor(
     private enrollmentService: EnrollmentService,
     private studentsService: StudentsService,
     private coursesService: CoursesService,
@@ -33,9 +33,9 @@ export class EnrollmentsManagerComponent implements OnInit {
     await this.loadInitial();
   }
 
-  /** Carga alumnos y cursos, y luego recarga inscripciones (expand) */
   private async loadInitial() {
     try {
+      // Carga bases primero
       const [students, courses] = await Promise.all([
         firstValueFrom(this.studentsService.getStudents()),
         firstValueFrom(this.coursesService.getCourses())
@@ -43,20 +43,30 @@ export class EnrollmentsManagerComponent implements OnInit {
       this.students = students;
       this.courses = courses;
 
-      await this.reload(); // trae enrollments con _expand para nombres
+      await this.reload(); // trae inscripciones y decora con nombres
     } finally {
-      this.cdr.detectChanges(); // zoneless
+      this.cdr.detectChanges();
     }
   }
 
-  /** Recarga la lista de inscripciones expandida (student + course) */
+  /** Recarga inscripciones y hace join con students/courses (sin _expand) */
   private async reload() {
-    this.enrollments = await firstValueFrom(this.enrollmentService.getAll(true));
-    this.cdr.detectChanges(); // zoneless
+    const raw = await firstValueFrom(this.enrollmentService.getAll(false)); // false: sin expand
+    this.enrollments = this.decorate(raw);
+    this.cdr.detectChanges();
+  }
+
+  /** Join en cliente: agrega student y course a cada enrollment */
+  private decorate(list: Enrollment[]): EnrollmentExpanded[] {
+    return list.map(e => ({
+      ...e,
+      student: this.students.find(s => s.id === e.studentId),
+      course:  this.courses.find(c => c.id === e.courseId),
+    }));
   }
 
   newEnrollment() {
-    this.editing = { id: 0, studentId: 0, courseId: 0 };
+    this.editing = { id: 0, studentId: null as any, courseId: null as any }; // usas required en el form
     this.cdr.detectChanges();
   }
 
@@ -65,24 +75,22 @@ export class EnrollmentsManagerComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  /** Opción A: guardar y luego recargar la lista con expand */
+  /** Guardar y luego recargar (Opción A) */
   async saveEnrollment(enrollment: Enrollment) {
     try {
       if (enrollment.id && enrollment.id !== 0) {
         await firstValueFrom(this.enrollmentService.update(enrollment));
       } else {
-        // Crear: no enviar id para que json-server lo genere
-        const { id, ...payload } = enrollment as any;
+        const { id, ...payload } = enrollment as any; // no enviar id
         await firstValueFrom(this.enrollmentService.add(payload));
       }
-      await this.reload();
+      await this.reload(); // vuelve a hacer join y refresca tabla
     } finally {
       this.editing = null;
-      this.cdr.detectChanges(); // zoneless
+      this.cdr.detectChanges();
     }
   }
 
-  /** Eliminar y recargar para reflejar cambios */
   async deleteEnrollment(e: EnrollmentExpanded) {
     await firstValueFrom(this.enrollmentService.delete(e.id));
     await this.reload();

@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule,NgIf,NgFor } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Course, Student, Enrollment } from '../../../shared/entities';
+import { N } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-enrollment-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule,NgIf,NgFor],
   templateUrl: './enrollment-form.html'
 })
 export class EnrollmentFormComponent implements OnChanges {

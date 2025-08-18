@@ -9,12 +9,12 @@ export class EnrollmentService {
 
   constructor(private http: HttpClient) {}
 
-  getAll(expanded = true): Observable<EnrollmentExpanded[]> {
-    const url = expanded
-      ? `${this.apiUrl}?_expand=student&_expand=course`
-      : this.apiUrl;
-    return this.http.get<EnrollmentExpanded[]>(url);
-  }
+  getAll(expanded = false) {
+  const url = expanded
+    ? `${this.apiUrl}?_expand=student&_expand=course`   // útil solo con json-server
+    : this.apiUrl;                                      // MockAPI: usa este
+  return this.http.get<Enrollment[]>(url);
+}
 
   add(enrollment: Omit<Enrollment, 'id'>): Observable<EnrollmentExpanded> {
     return this.http.post<EnrollmentExpanded>(this.apiUrl, enrollment);

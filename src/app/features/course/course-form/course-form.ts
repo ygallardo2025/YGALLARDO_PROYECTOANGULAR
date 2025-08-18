@@ -26,23 +26,26 @@ export class CourseFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['course'] && this.course) {
-      this.courseForm.patchValue(this.course);
+      this.courseForm.reset(this.course); // ← incluye id
     }
   }
 
   getErrorMessage(controlName: string): string | null {
     const ctrl = this.courseForm.get(controlName);
     if (!ctrl || !ctrl.errors || !(ctrl.touched || ctrl.dirty)) return null;
-    const errs = ctrl.errors;
-
-    if (errs['required']) return 'Este campo es obligatorio.';
+    if (ctrl.errors['required']) return 'Este campo es obligatorio.';
     return null;
   }
 
   onSubmit() {
     this.courseForm.markAllAsTouched();
     if (this.courseForm.valid) {
-      this.save.emit(this.courseForm.value);
+      const value = this.courseForm.value as Course;
+      const payload: Course = {
+        ...value,
+        id: this.course?.id ?? value.id ?? 0  // ← conserva id al editar; 0 si es nuevo
+      };
+      this.save.emit(payload);
       this.courseForm.reset();
     }
   }
@@ -51,4 +54,3 @@ export class CourseFormComponent implements OnChanges {
     this.courseForm.reset();
   }
 }
-

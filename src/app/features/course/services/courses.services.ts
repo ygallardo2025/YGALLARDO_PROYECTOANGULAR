@@ -3,9 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Course } from '../../../shared/entities';
 import { Observable } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class CoursesService {
   private apiUrl = 'http://localhost:3000/courses';
 
@@ -15,7 +13,7 @@ export class CoursesService {
     return this.http.get<Course[]>(this.apiUrl);
   }
 
-  addCourse(course: Course): Observable<Course> {
+  addCourse(course: Omit<Course, 'id'>): Observable<Course> {
     return this.http.post<Course>(this.apiUrl, course);
   }
 

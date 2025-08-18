@@ -18,7 +18,7 @@ export class StudentFormComponent implements OnChanges {
 
   constructor(private fb: FormBuilder) {
     this.studentForm = this.fb.group({
-      id: [null],
+      id: [null], // <-- importante que exista en el form
       name: ['', Validators.required],
       surname: ['', Validators.required],
       age: [null, Validators.required],
@@ -29,14 +29,22 @@ export class StudentFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['student'] && this.student) {
-      this.studentForm.patchValue(this.student);
+      // Cargar el objeto completo, incluido el id
+      this.studentForm.reset(this.student);
     }
   }
 
   guardarCambios() {
     this.studentForm.markAllAsTouched();
     if (this.studentForm.valid) {
-      this.save.emit(this.studentForm.value);
+      // Asegurar que el id se conserve al editar; y sea 0 al crear (tu patrón actual)
+      const value = this.studentForm.value as Student;
+      const payload: Student = {
+        ...value,
+        id: this.student?.id ?? value.id ?? 0
+      };
+
+      this.save.emit(payload);
       this.studentForm.reset();
     }
   }

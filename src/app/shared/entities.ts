@@ -12,3 +12,15 @@ export interface Course {
   title: string;
   description: string;
 }
+
+export interface Enrollment {
+  id: number;
+  studentId: number;
+  courseId: number;
+}
+
+// Para listar con nombres expandidos desde json-server:
+export interface EnrollmentExpanded extends Enrollment {
+  student?: Student;
+  course?: Course;
+}

@@ -4,21 +4,24 @@
   </div>
   <ul class="nav flex-column">
     <li class="nav-item mb-2">
-      <a class="nav-link text-white" routerLink="/dashboard" routerLinkActive="active">
+      <a class="nav-link text-white" [routerLink]="['/', RoutePath.Dashboard]" routerLinkActive="active">
         <i class="bi bi-grid-fill me-2"></i> Dashboard
       </a>
     </li>
     <li class="nav-item mb-2">
-      <a class="nav-link text-white" routerLink="/students" routerLinkActive="active">
+      <a class="nav-link text-white" [routerLink]="['/', RoutePath.Students]" routerLinkActive="active">
         <i class="bi bi-people-fill me-2"></i> Estudiantes
       </a>
     </li>
     <li class="nav-item mb-2">
-      <a class="nav-link text-white" routerLink="/cursos" routerLinkActive="active">
+      <a class="nav-link text-white" [routerLink]="['/', RoutePath.Courses]" routerLinkActive="active">
         <i class="bi bi-bar-chart-fill me-2"></i> Cursos
+      </a>
+    </li>
+    <li class="nav-item mb-2">
+      <a class="nav-link text-white" [routerLink]="['/', RoutePath.Enrollments]" routerLinkActive="active">
+        <i class="bi bi-journal-plus me-2"></i> Inscripciones
       </a>
     </li>
   </ul>
 </nav>
-
-

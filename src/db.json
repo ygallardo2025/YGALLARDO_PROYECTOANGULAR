@@ -1,4 +1,3 @@
- 
 {
   "students": [
     {
@@ -6,7 +5,7 @@
       "name": "Diego",
       "surname": "Gutiérrez",
       "age": 22,
-      "rut": 22334455,
+      "rut": "22334455",
       "average": 8.7
     },
     {
@@ -14,7 +13,7 @@
       "name": "Valentina",
       "surname": "Sánchez",
       "age": 19,
-      "rut": 55667799,
+      "rut": "55667799",
       "average": 9.3
     },
     {
@@ -22,7 +21,7 @@
       "name": "Carlos",
       "surname": "Ramírez",
       "age": 23,
-      "rut": 99887766,
+      "rut": "99887766",
       "average": 8.2
     },
     {
@@ -30,43 +29,34 @@
       "name": "Isabella",
       "surname": "Morales",
       "age": 20,
-      "rut": 11223344,
+      "rut": "11223344",
       "average": 9
-    },
-    {
-      "id": "13",
-      "name": "Mateo",
-      "surname": "Castro",
-      "age": 21,
-      "rut": 44332211,
-      "average": 7.9
-    },
-    {
-      "id": "16",
-      "name": "Gabriela",
-      "surname": "Rojas",
-      "age": 23,
-      "rut": 66554433,
-      "average": 8.1
     },
     {
       "id": "17",
       "name": "Fernando",
       "surname": "García",
       "age": 20,
-      "rut": 33445566,
+      "rut": "33445566",
       "average": 9.2
     },
     {
-      "id": "18",
-      "name": "Natalia",
-      "surname": "López",
-      "age": 21,
-      "rut": 22334455,
-      "average": 7.6
+      "id": "0",
+      "name": "katherine",
+      "surname": "jerez",
+      "age": 35,
+      "dni": "16424854-2",
+      "average": 9.5
+    },
+    {
+      "id": "0",
+      "name": "katherine",
+      "surname": "jerez",
+      "age": 35,
+      "dni": "16424854-2",
+      "average": 8.5
     }
-  ]
-,
+  ],
   "courses": [
     {
       "id": "1",
@@ -92,7 +82,23 @@
       "id": "5",
       "title": "Educación Física",
       "description": "Curso de educación física"
+    },
+    {
+      "id": "0e71",
+      "title": "c#",
+      "description": "principios basicos de C# con NET 8.0"
+    }
+  ],
+  "enrollments": [
+    {
+      "id": "1",
+      "studentId": 1,
+      "courseId": 2
+    },
+    {
+      "id": "2e9a",
+      "studentId": "12",
+      "courseId": "2"
     }
   ]
 }
- 

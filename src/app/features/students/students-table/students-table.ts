@@ -13,12 +13,16 @@ import { CommonModule } from '@angular/common';
 })
 export class StudentsTableComponent {
   @Input() students: Student[] = [];
-  
+  @Input() canEdit = false;
+
   @Output() eliminar = new EventEmitter<Student>();
   @Output() editar = new EventEmitter<Student>();
 
-  displayedColumns: string[] = ['fullname', 'age', 'dni', 'average', 'actions'];
-
+  //displayedColumns: string[] = ['fullname', 'age', 'dni', 'average', 'actions'];
+  private readonly baseColumns = ['fullname', 'age', 'dni', 'average'];
+  get displayedColumns(): string[] {
+    return this.canEdit ? [...this.baseColumns, 'actions'] : this.baseColumns;
+  }
   eliminarEstudiante(estudiante: Student) {
     this.eliminar.emit(estudiante);
   }

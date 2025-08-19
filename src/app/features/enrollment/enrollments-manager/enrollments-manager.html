@@ -1,30 +1,23 @@
-<div class="container mt-4">
-  <!-- Encabezado -->
-  <div class="d-flex justify-content-between align-items-center mb-3">
-    <h4 class="mb-0">Inscripciones</h4>
-    <button class="btn btn-primary" (click)="newEnrollment()">Nueva inscripción</button>
-  </div>
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <h4 class="mb-0">Inscripciones</h4>
+  <button class="btn btn-primary" (click)="newEnrollment()" *ngIf="isAdmin">Nueva inscripción</button>
+</div>
 
-  <!-- Tabla -->
-  <app-enrollment-table
-    [enrollments]="enrollments"
-    (editar)="editEnrollment($event)"
-    (eliminar)="deleteEnrollment($event)">
-  </app-enrollment-table>
+<app-enrollment-table
+  [enrollments]="enrollments"
+  [canEdit]="isAdmin"
+  (editar)="editEnrollment($event)"
+  (eliminar)="deleteEnrollment($event)">
+</app-enrollment-table>
 
-  <!-- Formulario -->
-  <div class="card mt-4" *ngIf="editing">
-    <div class="card-body">
-      <h5 class="card-title">
-        {{ editing.id === 0 ? 'Nueva inscripción' : 'Editar inscripción' }}
-      </h5>
-
-      <app-enrollment-form
-        [enrollment]="editing"
-        [students]="students"
-        [courses]="courses"
-        (save)="saveEnrollment($event)">
-      </app-enrollment-form>
-    </div>
+<div class="card mt-4" *ngIf="isAdmin && editing">
+  <div class="card-body">
+    <h5 class="card-title">{{ editing.id === 0 ? 'Nueva inscripción' : 'Editar inscripción' }}</h5>
+    <app-enrollment-form
+      [enrollment]="editing"
+      [students]="students"
+      [courses]="courses"
+      (save)="saveEnrollment($event)">
+    </app-enrollment-form>
   </div>
 </div>

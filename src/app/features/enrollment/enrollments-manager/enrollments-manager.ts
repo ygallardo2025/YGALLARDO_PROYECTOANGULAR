@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef,inject} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 import { Course, Enrollment, EnrollmentExpanded, Student } from '../../../shared/entities';
@@ -7,6 +7,7 @@ import { StudentsService } from '../../students/services/students.service';
 import { CoursesService } from '../../course/services/courses.services';
 import { EnrollmentTableComponent } from '../enrollment-table/enrollment-table';
 import { EnrollmentFormComponent } from '../enrollment-form/enrollment-form';
+import { AuthService } from '../../../core/auth/auth.service';
 
 @Component({
   selector: 'app-enrollments-manager',
@@ -16,6 +17,8 @@ import { EnrollmentFormComponent } from '../enrollment-form/enrollment-form';
   styleUrls: ['./enrollments-manager.scss']
 })
 export class EnrollmentsManagerComponent implements OnInit {
+  private auth = inject(AuthService);
+  get isAdmin() { return this.auth.hasRole('admin'); }
   enrollments: EnrollmentExpanded[] = [];
   students: Student[] = [];
   courses: Course[] = [];

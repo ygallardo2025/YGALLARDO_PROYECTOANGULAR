@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive,Router } from '@angular/router';
-//import { RouterModule } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { RoutePath } from '../shared/route-path';
 import { AuthService } from '../core/auth/auth.service';
 
@@ -14,6 +13,7 @@ import { AuthService } from '../core/auth/auth.service';
 })
 export class Navbar {
   RoutePath = RoutePath;
+
   constructor(public auth: AuthService, private router: Router) {}
 
   logout() {

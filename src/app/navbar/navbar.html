@@ -4,40 +4,77 @@
   </div>
 
   <ul class="nav flex-column">
-    <li class="nav-item mb-2" @If(auth.isAuthenticated())>
-      <a class="nav-link text-white" [routerLink]="['/', RoutePath.Dashboard]" routerLinkActive="active">
+    <li class="nav-item mb-2">
+      <a
+        class="nav-link text-white"
+        [routerLink]="['/', RoutePath.Dashboard]"
+        routerLinkActive="active"
+      >
         <i class="bi bi-grid-fill me-2"></i> Dashboard
       </a>
     </li>
-    <li class="nav-item mb-2" *ngIf="auth.isAuthenticated()">
-      <a class="nav-link text-white" [routerLink]="['/', RoutePath.Students]" routerLinkActive="active">
+
+    <li class="nav-item mb-2">
+      <a
+        class="nav-link text-white"
+        [routerLink]="['/', RoutePath.Students]"
+        routerLinkActive="active"
+      >
         <i class="bi bi-people-fill me-2"></i> Estudiantes
       </a>
     </li>
-    <li class="nav-item mb-2" *ngIf="auth.isAuthenticated()">
-      <a class="nav-link text-white" [routerLink]="['/', RoutePath.Courses]" routerLinkActive="active">
-        <i class="bi bi-bar-chart-fill me-2"></i> Cursos
+
+    <li class="nav-item mb-2">
+      <a
+        class="nav-link text-white"
+        [routerLink]="['/', RoutePath.Courses]"
+        routerLinkActive="active"
+      >
+        <i class="bi bi-book-half me-2"></i> Cursos
       </a>
     </li>
-    <li class="nav-item mb-2" *ngIf="auth.isAuthenticated()">
-      <a class="nav-link text-white" [routerLink]="['/', RoutePath.Enrollments]" routerLinkActive="active">
-        <i class="bi bi-journal-plus me-2"></i> Inscripciones
+
+    <li class="nav-item mb-2">
+      <a
+        class="nav-link text-white"
+        [routerLink]="['/', RoutePath.Enrollments]"
+        routerLinkActive="active"
+      >
+        <i class="bi bi-card-checklist me-2"></i> Inscripciones
       </a>
     </li>
-    <li class="nav-item mb-2" *ngIf="auth.isAuthenticated() && auth.hasRole('admin')">
-      <a class="nav-link text-white" [routerLink]="['/', RoutePath.Users]" routerLinkActive="active">
+
+    <!-- Solo admin -->
+    <li
+      class="nav-item mb-2"
+      *ngIf="auth.isAuthenticated() && auth.hasRole('admin')"
+    >
+      <a
+        class="nav-link text-white"
+        [routerLink]="['/', RoutePath.Users]"
+        routerLinkActive="active"
+      >
         <i class="bi bi-person-gear me-2"></i> Usuarios
       </a>
     </li>
   </ul>
 
-  <div class="mt-auto" *ngIf="auth.isAuthenticated(); else loginLink">
-    <hr class="border-light">
-    <div class="small mb-2">Sesión: <strong>{{ auth.currentUser?.name }}</strong> ({{ auth.currentUser?.role }})</div>
-    <button class="btn btn-outline-light btn-sm" (click)="logout()">Cerrar sesión</button>
+  <!-- Pie de sesión -->
+  <div
+    class="mt-auto pt-3 border-top border-light-subtle"
+    *ngIf="auth.isAuthenticated(); else loginLink"
+  >
+    <div class="small opacity-75 mb-2">
+      Conectado como {{ auth.currentUser?.name }} ({{ auth.currentUser?.role }})
+    </div>
+    <button class="btn btn-light w-100" (click)="logout()">Cerrar sesión</button>
   </div>
 
   <ng-template #loginLink>
-    <a class="btn btn-light w-100" [routerLink]="['/', RoutePath.Login]">Iniciar sesión</a>
+    <div class="mt-auto pt-3 border-top border-light-subtle">
+      <a class="btn btn-light w-100" [routerLink]="['/', RoutePath.Login]"
+        >Iniciar sesión</a
+      >
+    </div>
   </ng-template>
 </nav>

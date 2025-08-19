@@ -6,24 +6,22 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-courses-table',
   standalone: true,
-  imports: [MatTableModule,CommonModule  ],
+  imports: [CommonModule, MatTableModule],
   templateUrl: './courses-table.html',
   styleUrls: ['./courses-table.scss']
 })
 export class CoursesTableComponent {
   @Input() courses: Course[] = [];
-
-  displayedColumns: string[] = ['title', 'description', 'actions'];
+  @Input() canEdit = false;
 
   @Output() eliminar = new EventEmitter<Course>();
   @Output() editar = new EventEmitter<Course>();
 
-  eliminarCurso(curso: Course) {
-    this.eliminar.emit(curso);
+  private readonly baseColumns = ['title', 'description'];
+  get displayedColumns(): string[] {
+    return this.canEdit ? [...this.baseColumns, 'actions'] : this.baseColumns;
   }
 
-  editarCurso(curso: Course) {
-    this.editar.emit(curso);
-  }
+  eliminarCurso(curso: Course) { this.eliminar.emit(curso); }
+  editarCurso(curso: Course) { this.editar.emit(curso); }
 }
-

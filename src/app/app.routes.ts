@@ -33,6 +33,8 @@ export const routes: Routes = [
     canActivate: [authGuard, adminGuard],
     loadComponent: () => import('./features/users/users-manager/users-manager').then(m => m.UsersManagerComponent)
   },
-  { path: '', redirectTo: RoutePath.Dashboard, pathMatch: 'full' },
-  { path: '**', redirectTo: RoutePath.Dashboard }
+  //{ path: '', redirectTo: RoutePath.Dashboard, pathMatch: 'full' },
+  //{ path: '**', redirectTo: RoutePath.Dashboard }
+  { path: '', redirectTo: RoutePath.Login, pathMatch: 'full' },
+  { path: '**', redirectTo: RoutePath.Login }
 ];

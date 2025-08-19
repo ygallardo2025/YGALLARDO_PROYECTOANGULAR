@@ -4,7 +4,7 @@
   </div>
 
   <ul class="nav flex-column">
-    <li class="nav-item mb-2" *ngIf="auth.isAuthenticated()">
+    <li class="nav-item mb-2" @If(auth.isAuthenticated())>
       <a class="nav-link text-white" [routerLink]="['/', RoutePath.Dashboard]" routerLinkActive="active">
         <i class="bi bi-grid-fill me-2"></i> Dashboard
       </a>

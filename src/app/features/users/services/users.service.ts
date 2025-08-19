@@ -5,7 +5,7 @@ import { Role, User } from '../../../shared/entities';
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
-  private apiUrl = 'https://68a470c4c123272fb9b2b56f.mockapi.io/Users'; ///////////////////cambiar
+  private apiUrl = 'https://mockapi.io/projects/68a470c4c123272fb9b2b570/Users'; 
   constructor(private http: HttpClient) {}
   
   private fromApi = (a: ApiUser): User => ({

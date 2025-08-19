@@ -1,4 +1,4 @@
-<!doctype html>
+export default `<!doctype html>
 <html lang="en" data-beasties-container="">
 <head><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
   <meta charset="utf-8">
@@ -17,3 +17,4 @@
   <app-root></app-root>
 <link rel="modulepreload" href="chunk-XMFSSX6R.js"><link rel="modulepreload" href="chunk-NGHFI2C2.js"><link rel="modulepreload" href="chunk-VBKEXR47.js"><link rel="modulepreload" href="chunk-O2KJT2HM.js"><script src="main-IFIMIZ37.js" type="module"></script></body>
 </html>
+`;

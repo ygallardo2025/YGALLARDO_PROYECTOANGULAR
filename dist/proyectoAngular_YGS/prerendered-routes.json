@@ -1,0 +1,11 @@
+{
+  "routes": {
+    "/": {},
+    "/cursos": {},
+    "/dashboard": {},
+    "/inscripciones": {},
+    "/login": {},
+    "/students": {},
+    "/usuarios": {}
+  }
+}

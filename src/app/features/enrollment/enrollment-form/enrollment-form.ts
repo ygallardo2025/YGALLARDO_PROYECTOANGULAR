@@ -1,13 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
-import { CommonModule,NgIf,NgFor } from '@angular/common';
+import { CommonModule, NgIf, NgForOf } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Course, Student, Enrollment } from '../../../shared/entities';
-import { N } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-enrollment-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule,NgIf,NgFor],
+  imports: [CommonModule, ReactiveFormsModule, NgIf, NgForOf],
   templateUrl: './enrollment-form.html'
 })
 export class EnrollmentFormComponent implements OnChanges {
@@ -21,7 +20,6 @@ export class EnrollmentFormComponent implements OnChanges {
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
       id: [null],
-      // usamos null + required; así evitamos problemas de tipo string/number
       studentId: [null, [Validators.required]],
       courseId:  [null, [Validators.required]],
     });
@@ -29,7 +27,7 @@ export class EnrollmentFormComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['enrollment'] && this.enrollment) {
-      this.form.reset(this.enrollment); // incluye id, studentId, courseId
+      this.form.reset(this.enrollment);
     }
   }
 
@@ -40,9 +38,8 @@ export class EnrollmentFormComponent implements OnChanges {
     const value = this.form.value as Enrollment;
     const payload: Enrollment = {
       ...value,
-      id: this.enrollment?.id ?? value.id ?? 0, // conserva id al editar; 0 para crear
+      id: this.enrollment?.id ?? value.id ?? 0,
     };
-
     this.save.emit(payload);
     this.form.reset();
   }

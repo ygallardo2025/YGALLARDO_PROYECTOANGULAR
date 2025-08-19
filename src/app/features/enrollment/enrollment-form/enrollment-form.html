@@ -5,9 +5,7 @@
     <label class="form-label">Alumno</label>
     <select class="form-select" formControlName="studentId">
       <option [ngValue]="null" disabled>Seleccione un alumno...</option>
-      <option *ngFor="let s of students" [ngValue]="s.id">
-        {{ s.name }} {{ s.surname }}
-      </option>
+      <option *ngFor="let s of students" [ngValue]="s.id">{{ s.name }} {{ s.surname }}</option>
     </select>
     <div class="text-danger small mt-1" *ngIf="form.get('studentId')?.touched && form.get('studentId')?.hasError('required')">
       Debe seleccionar un alumno.
@@ -18,14 +16,12 @@
     <label class="form-label">Curso</label>
     <select class="form-select" formControlName="courseId">
       <option [ngValue]="null" disabled>Seleccione un curso...</option>
-      <option *ngFor="let c of courses" [ngValue]="c.id">
-        {{ c.title }}
-      </option>
+      <option *ngFor="let c of courses" [ngValue]="c.id">{{ c.title }}</option>
     </select>
     <div class="text-danger small mt-1" *ngIf="form.get('courseId')?.touched && form.get('courseId')?.hasError('required')">
       Debe seleccionar un curso.
     </div>
   </div>
 
-  <button type="submit" class="btn btn-success me-2" [disabled]="form.invalid">Guardar</button>
+  <button type="submit" class="btn btn-success" [disabled]="form.invalid">Guardar</button>
 </form>

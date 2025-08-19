@@ -5,18 +5,19 @@ import { Role, User } from '../../../shared/entities';
 
 @Injectable({ providedIn: 'root' })
 export class UsersService {
-  private apiUrl = 'https://68a28b69c5a31eb7bb1d235a.mockapi.io/Users'; ///////////////////cambiar
+  private apiUrl = 'https://68a470c4c123272fb9b2b56f.mockapi.io/Users'; ///////////////////cambiar
   constructor(private http: HttpClient) {}
-
+  
   private fromApi = (a: ApiUser): User => ({
     id: Number(a.id),
     name: a.name,
     email: a.email,
     role: (a.role as Role) ?? 'user',
-    token: '' // no viene de la API para el ABM
+    token: '' // no se usa en el ABM
   });
 
-  private toApi = (u: User): ApiUser => ({
+  // ⬇️ aceptar Omit<User, 'token'> aquí
+  private toApi = (u: Omit<User, 'token'>): ApiUser => ({
     id: String(u.id),
     name: u.name,
     email: u.email,
@@ -32,7 +33,9 @@ export class UsersService {
   }
 
   update(user: Omit<User, 'token'>): Observable<User> {
-    return this.http.put<ApiUser>(`${this.apiUrl}/${user.id}`, this.toApi(user)).pipe(map(this.fromApi));
+    // ✅ ahora encaja con toApi(...)
+    return this.http.put<ApiUser>(`${this.apiUrl}/${user.id}`, this.toApi(user))
+      .pipe(map(this.fromApi));
   }
 
   delete(id: number): Observable<void> {

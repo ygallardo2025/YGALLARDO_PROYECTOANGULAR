@@ -19,10 +19,9 @@ export class EnrollmentsManagerComponent implements OnInit {
   enrollments: EnrollmentExpanded[] = [];
   students: Student[] = [];
   courses: Course[] = [];
-
   editing: Enrollment | null = null;
 
-   constructor(
+  constructor(
     private enrollmentService: EnrollmentService,
     private studentsService: StudentsService,
     private coursesService: CoursesService,
@@ -35,28 +34,24 @@ export class EnrollmentsManagerComponent implements OnInit {
 
   private async loadInitial() {
     try {
-      // Carga bases primero
       const [students, courses] = await Promise.all([
         firstValueFrom(this.studentsService.getStudents()),
         firstValueFrom(this.coursesService.getCourses())
       ]);
       this.students = students;
       this.courses = courses;
-
-      await this.reload(); // trae inscripciones y decora con nombres
+      await this.reload();
     } finally {
       this.cdr.detectChanges();
     }
   }
 
-  /** Recarga inscripciones y hace join con students/courses (sin _expand) */
   private async reload() {
-    const raw = await firstValueFrom(this.enrollmentService.getAll(false)); // false: sin expand
-    this.enrollments = this.decorate(raw);
+    const raw = await firstValueFrom(this.enrollmentService.getAll());
+    this.enrollments = this.decorate(raw);   // join en cliente
     this.cdr.detectChanges();
   }
 
-  /** Join en cliente: agrega student y course a cada enrollment */
   private decorate(list: Enrollment[]): EnrollmentExpanded[] {
     return list.map(e => ({
       ...e,
@@ -66,7 +61,7 @@ export class EnrollmentsManagerComponent implements OnInit {
   }
 
   newEnrollment() {
-    this.editing = { id: 0, studentId: null as any, courseId: null as any }; // usas required en el form
+    this.editing = { id: 0, studentId: null as any, courseId: null as any };
     this.cdr.detectChanges();
   }
 
@@ -75,7 +70,6 @@ export class EnrollmentsManagerComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
-  /** Guardar y luego recargar (Opción A) */
   async saveEnrollment(enrollment: Enrollment) {
     try {
       if (enrollment.id && enrollment.id !== 0) {
@@ -84,7 +78,7 @@ export class EnrollmentsManagerComponent implements OnInit {
         const { id, ...payload } = enrollment as any; // no enviar id
         await firstValueFrom(this.enrollmentService.add(payload));
       }
-      await this.reload(); // vuelve a hacer join y refresca tabla
+      await this.reload(); // refresca tabla
     } finally {
       this.editing = null;
       this.cdr.detectChanges();

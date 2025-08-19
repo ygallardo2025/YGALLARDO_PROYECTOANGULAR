@@ -3,12 +3,13 @@ import { Student } from '../entities'; // Asegúrate de usar la ruta correcta
 
 @Pipe({
   name: 'fullname',
-  standalone: true // ← importante si estás usando standalone components
+  standalone: true, // para poder importarlo en componentes standalone
 })
 export class FullnamePipe implements PipeTransform {
-
-  transform(student: Student): string {
-    return `${student.name} ${student.surname}`;
+  transform(student: Student | null | undefined): string {
+    if (!student) return '';
+    const name = student.name ?? '';
+    const surname = student.surname ?? '';
+    return `${name} ${surname}`.trim();
   }
-
 }

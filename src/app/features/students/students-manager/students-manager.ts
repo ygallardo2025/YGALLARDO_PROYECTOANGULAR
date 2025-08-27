@@ -1,70 +1,71 @@
-import { Component, OnInit ,ChangeDetectorRef,inject} from '@angular/core';
+// src/app/features/students/students-manager/students-manager.ts
+import { Component, ChangeDetectionStrategy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { firstValueFrom } from 'rxjs';
+import { BehaviorSubject, combineLatest, firstValueFrom, Observable } from 'rxjs';
+import { map, shareReplay, switchMap } from 'rxjs/operators';
 import { Student } from '../../../shared/entities';
 import { StudentsTableComponent } from '../students-table/students-table';
 import { StudentFormComponent } from '../students-form/student-form';
 import { StudentsService } from '../services/students.service';
 import { AuthService } from '../../../core/auth/auth.service';
 
+type Vm = {
+  students: Student[];
+  canEdit: boolean;
+};
 
 @Component({
   selector: 'app-students-manager',
   standalone: true,
   imports: [CommonModule, StudentsTableComponent, StudentFormComponent],
   templateUrl: './students-manager.html',
-  styleUrls: ['./students-manager.scss']
+  styleUrls: ['./students-manager.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentsManagerComponent implements OnInit {
-  private auth = inject(AuthService);
+  private refresh$ = new BehaviorSubject<void>(undefined);
+  vm$!: Observable<Vm>;
 
-  students: Student[] = [];
   estudianteEditando: Student | null = null;
 
   constructor(
     private studentsService: StudentsService,
-    private cdr: ChangeDetectorRef
+    private auth: AuthService
   ) {}
 
-  get isAdmin(): boolean { return this.auth.hasRole('admin'); } // 👈
-
-  async ngOnInit() {
-    await this.cargar();
+  ngOnInit(): void {
+    this.vm$ = combineLatest([
+      this.refresh$.pipe(switchMap(() => this.studentsService.getStudents())),
+      this.auth.currentUser$
+    ]).pipe(
+      map(([students, user]) => ({
+        students,
+        canEdit: !!user && user.role === 'admin',
+      })),
+      shareReplay(1)
+    );
   }
-  private async cargar() {
-    this.students = await firstValueFrom(this.studentsService.getStudents());
-    this.cdr.detectChanges();
-  }
 
-  nuevoEstudiante() {
-    if (!this.isAdmin) return; // defensa extra
+  nuevoEstudiante(): void {
     this.estudianteEditando = { id: 0, name: '', surname: '', dni: '', age: 0, average: 0 };
-    this.cdr.detectChanges();
   }
 
-  onEditar(estudiante: Student) {
-    if (!this.isAdmin) return;
+  onEditar(estudiante: Student): void {
     this.estudianteEditando = { ...estudiante };
-    this.cdr.detectChanges();
   }
 
-  async onGuardarEditado(estudiante: Student) {
-    if (!this.isAdmin) return;
+  async onGuardarEditado(estudiante: Student): Promise<void> {
     if (estudiante.id === 0) {
-      const creado = await firstValueFrom(this.studentsService.addStudent(estudiante));
-      this.students = [...this.students, creado];
+      await firstValueFrom(this.studentsService.addStudent(estudiante));
     } else {
-      const actualizado = await firstValueFrom(this.studentsService.updateStudent(estudiante));
-      this.students = this.students.map(s => s.id === actualizado.id ? actualizado : s);
+      await firstValueFrom(this.studentsService.updateStudent(estudiante));
     }
     this.estudianteEditando = null;
-    this.cdr.detectChanges();
+    this.refresh$.next();
   }
 
-  async onEliminar(estudiante: Student) {
-    if (!this.isAdmin) return;
+  async onEliminar(estudiante: Student): Promise<void> {
     await firstValueFrom(this.studentsService.deleteStudent(estudiante.id));
-    this.students = this.students.filter(s => s.id !== estudiante.id);
-    this.cdr.detectChanges();
+    this.refresh$.next();
   }
 }

@@ -1,19 +1,14 @@
-<!-- app.component.html -->
+<app-toolbar></app-toolbar>
+<app-navbar></app-navbar>
 
-<div class="app-layout" style="display: flex; min-height: 100vh;">
-  <!-- Sidebar -->
-  <app-navbar></app-navbar>
+<main class="app-main" [class.shift]="(sidebarOpen$ | async) ?? false">
+  <div class="content">
+    <router-outlet></router-outlet>
 
-  <!-- Contenido principal -->
-  <div class="main-content" style="flex: 1; background: #f9f7fa;">
-    <app-toolbar class="toolbar"></app-toolbar>
-    <div class="content" style="padding: 2rem;">
-      <router-outlet></router-outlet>
-    </div>
     <div class="footer mt-4">
       <p class="text-center">© 2025 Proyecto Angular - Estudiantes</p>
       <p class="text-center">Desarrollado por ygallardo</p>
       <p class="text-center">Todos los derechos reservados</p>
     </div>
   </div>
-</div>
+</main>

@@ -1,20 +1,22 @@
-.container {
-    display: grid;
-    grid-template-areas: 
-    'toolbar toolbar'
-    'navbar content';
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: auto 1fr;
+:root {
+  --toolbar-h: 56px;    /* alto del toolbar */
+  --sidebar-w: 260px;   /* ancho del sidebar */
 }
 
-.toolbar {
-    grid-area: toolbar;
+.app-main {
+  padding-top: var(--toolbar-h);  /* empuja debajo del toolbar */
+  background: #f9f7fa;
+  min-height: 100vh;
+  transition: padding-left .2s ease;
 }
 
-.navbar {
-    grid-area: navbar;
+/* cuando el sidebar esté abierto, empujar contenido en pantallas grandes */
+@media (min-width: 992px) {
+  .app-main.shift {
+    padding-left: var(--sidebar-w);
+  }
 }
 
 .content {
-    grid-area: content;
+  padding: 2rem;
 }

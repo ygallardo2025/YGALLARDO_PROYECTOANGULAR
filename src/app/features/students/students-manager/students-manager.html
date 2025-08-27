@@ -1,21 +1,27 @@
-<div class="container mt-4">
+<div class="container mt-4" *ngIf="vm$ | async as vm">
+  <!-- Encabezado -->
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h4 class="mb-0">Listado de estudiantes</h4>
-    <button class="btn btn-primary" (click)="nuevoEstudiante()" *ngIf="isAdmin">Añadir estudiante</button>
+    <button class="btn btn-primary" (click)="nuevoEstudiante()" [disabled]="!vm.canEdit">
+      Añadir estudiante
+    </button>
   </div>
 
+  <!-- Tabla -->
   <app-students-table
-    [students]="students"
-    [canEdit]="isAdmin"
+    [students]="vm.students"
+    [canEdit]="vm.canEdit"
     (editar)="onEditar($event)"
     (eliminar)="onEliminar($event)">
   </app-students-table>
 
-  <div class="card mt-4" *ngIf="isAdmin && estudianteEditando">
+  <!-- Formulario (editar o agregar) -->
+  <div class="card mt-4" *ngIf="estudianteEditando">
     <div class="card-body">
       <h5 class="card-title">
         {{ estudianteEditando.id === 0 ? 'Añadir estudiante' : 'Editar estudiante' }}
       </h5>
+
       <app-student-form
         [student]="estudianteEditando"
         (save)="onGuardarEditado($event)">

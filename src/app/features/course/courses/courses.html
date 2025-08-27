@@ -1,26 +1,22 @@
-<div class="container mt-4">
+<div class="container mt-4" *ngIf="vm$ | async as vm">
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h4 class="mb-0">Listado de cursos</h4>
-    <button class="btn btn-primary" *ngIf="isAdmin" (click)="newCourse()">
+    <button class="btn btn-primary" (click)="newCourse()" [disabled]="!vm.canEdit">
       Añadir curso
     </button>
   </div>
 
-  <div *ngIf="loading" class="alert alert-info">Cargando...</div>
-  <div *ngIf="errorMsg" class="alert alert-danger">{{ errorMsg }}</div>
-
   <app-courses-table
-    [courses]="courses"
-    [canEdit]="isAdmin"
+    [courses]="vm.courses"
+    [canEdit]="vm.canEdit"
     (editar)="editCourse($event)"
     (eliminar)="deleteCourse($event)">
   </app-courses-table>
 
-  <div class="card mt-4" *ngIf="isAdmin && courseToEdit">
+  <div class="card mt-4" *ngIf="courseToEdit">
     <div class="card-body">
-      <h5 class="card-title">
-        {{ courseToEdit.id === 0 ? 'Añadir curso' : 'Editar curso' }}
-      </h5>
+      <h5 class="card-title">{{ courseToEdit.id === 0 ? 'Añadir curso' : 'Editar curso' }}</h5>
+
       <app-course-form
         [course]="courseToEdit"
         (save)="saveCourse($event)">

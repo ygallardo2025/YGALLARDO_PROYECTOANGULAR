@@ -1,80 +1,37 @@
-<nav class="sidebar bg-primary text-white vh-100 p-3">
-  <div class="sidebar-header mb-4">
-    <h4 class="fw-bold">Menú</h4>
-  </div>
-
-  <ul class="nav flex-column">
-    <li class="nav-item mb-2">
-      <a
-        class="nav-link text-white"
-        [routerLink]="['/', RoutePath.Dashboard]"
-        routerLinkActive="active"
-      >
-        <i class="bi bi-grid-fill me-2"></i> Dashboard
-      </a>
-    </li>
-
-    <li class="nav-item mb-2">
-      <a
-        class="nav-link text-white"
-        [routerLink]="['/', RoutePath.Students]"
-        routerLinkActive="active"
-      >
-        <i class="bi bi-people-fill me-2"></i> Estudiantes
-      </a>
-    </li>
-
-    <li class="nav-item mb-2">
-      <a
-        class="nav-link text-white"
-        [routerLink]="['/', RoutePath.Courses]"
-        routerLinkActive="active"
-      >
-        <i class="bi bi-book-half me-2"></i> Cursos
-      </a>
-    </li>
-
-    <li class="nav-item mb-2">
-      <a
-        class="nav-link text-white"
-        [routerLink]="['/', RoutePath.Enrollments]"
-        routerLinkActive="active"
-      >
-        <i class="bi bi-card-checklist me-2"></i> Inscripciones
-      </a>
-    </li>
-
-    <!-- Solo admin -->
-    <li
-      class="nav-item mb-2"
-      *ngIf="auth.isAuthenticated() && auth.hasRole('admin')"
-    >
-      <a
-        class="nav-link text-white"
-        [routerLink]="['/', RoutePath.Users]"
-        routerLinkActive="active"
-      >
-        <i class="bi bi-person-gear me-2"></i> Usuarios
-      </a>
-    </li>
-  </ul>
-
-  <!-- Pie de sesión -->
-  <div
-    class="mt-auto pt-3 border-top border-light-subtle"
-    *ngIf="auth.isAuthenticated(); else loginLink"
-  >
-    <div class="small opacity-75 mb-2">
-      Conectado como {{ auth.currentUser?.name }} ({{ auth.currentUser?.role }})
+<ng-container *ngIf="vm$ | async as vm">
+  <aside class="sidebar text-white p-3" [class.open]="vm.isOpen">
+    <div class="sidebar-header mb-4">
+      <h4 class="fw-bold">Menú</h4>
     </div>
-    <button class="btn btn-light w-100" (click)="logout()">Cerrar sesión</button>
-  </div>
 
-  <ng-template #loginLink>
-    <div class="mt-auto pt-3 border-top border-light-subtle">
-      <a class="btn btn-light w-100" [routerLink]="['/', RoutePath.Login]"
-        >Iniciar sesión</a
-      >
-    </div>
-  </ng-template>
-</nav>
+    <ng-container *ngIf="vm.isAuthenticated">
+      <ul class="nav flex-column">
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white" [routerLink]="['/', RoutePath.Dashboard]" routerLinkActive="active">
+            <i class="bi bi-grid-fill me-2"></i> Dashboard
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white" [routerLink]="['/', RoutePath.Students]" routerLinkActive="active">
+            <i class="bi bi-people-fill me-2"></i> Estudiantes
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white" [routerLink]="['/', RoutePath.Courses]" routerLinkActive="active">
+            <i class="bi bi-book-half me-2"></i> Cursos
+          </a>
+        </li>
+        <li class="nav-item mb-2">
+          <a class="nav-link text-white" [routerLink]="['/', RoutePath.Enrollments]" routerLinkActive="active">
+            <i class="bi bi-card-checklist me-2"></i> Inscripciones
+          </a>
+        </li>
+        <li class="nav-item mb-2" *ngIf="vm.isAdmin">
+          <a class="nav-link text-white" [routerLink]="['/', RoutePath.Users]" routerLinkActive="active">
+            <i class="bi bi-person-gear me-2"></i> Usuarios
+          </a>
+        </li>
+      </ul>
+    </ng-container>
+  </aside>
+</ng-container>

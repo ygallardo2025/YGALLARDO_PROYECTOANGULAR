@@ -1,3 +1,14 @@
-.toolbar {
-    border: 2px solid rgb(143, 143, 139);
+.app-toolbar {
+  height: var(--toolbar-h);
+  background: #0d6efd; /* bg-primary */
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,.06);
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1030;
 }

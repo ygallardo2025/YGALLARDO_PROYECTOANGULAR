@@ -1,5 +1,26 @@
-<!-- Titulo de la APP -->
+<header class="app-toolbar d-flex align-items-center px-3">
+  <!-- Toggle Sidebar -->
+  <button class="btn btn-outline-light me-2" (click)="toggleSidebar()" aria-label="Alternar menú">
+    <i class="bi bi-list"></i>
+  </button>
 
-<h1 appBigtitle class="toolbar">
-    Gestion de Estudiantes
-</h1>
+  <!-- Título del módulo -->
+  <div class="flex-grow-1">
+    <h5 class="mb-0">{{ (vm$ | async)?.title }}</h5>
+  </div>
+
+  <!-- Lado derecho: login/logout y user -->
+  <ng-container *ngIf="vm$ | async as vm">
+    <div class="d-flex align-items-center gap-2">
+      <ng-container *ngIf="vm.isAuthenticated; else loginBtn">
+        <span class="small opacity-75 d-none d-md-inline">
+          {{ vm.user?.name }} ({{ vm.user?.role }})
+        </span>
+        <button class="btn btn-light btn-sm" (click)="logout()">Cerrar sesión</button>
+      </ng-container>
+      <ng-template #loginBtn>
+        <button class="btn btn-light btn-sm" (click)="login()">Iniciar sesión</button>
+      </ng-template>
+    </div>
+  </ng-container>
+</header>

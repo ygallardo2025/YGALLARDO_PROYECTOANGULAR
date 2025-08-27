@@ -1,15 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { Student } from '../../../shared/entities';
-import { MatTableModule } from '@angular/material/table';
-import { FullnamePipe } from '../../../shared/pipes/fullname-pipe';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MatTableModule } from '@angular/material/table';
+
+import { Student } from '../../../shared/entities';
+import { FullnamePipe } from '../../../shared/pipes/fullname-pipe';
 
 @Component({
   selector: 'app-students-table',
   standalone: true,
   imports: [CommonModule, MatTableModule, FullnamePipe],
   templateUrl: './students-table.html',
-  styleUrls: ['./students-table.scss']
+  styleUrls: ['./students-table.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StudentsTableComponent {
   @Input() students: Student[] = [];
@@ -18,11 +20,8 @@ export class StudentsTableComponent {
   @Output() eliminar = new EventEmitter<Student>();
   @Output() editar = new EventEmitter<Student>();
 
-  //displayedColumns: string[] = ['fullname', 'age', 'dni', 'average', 'actions'];
-  private readonly baseColumns = ['fullname', 'age', 'dni', 'average'];
-  get displayedColumns(): string[] {
-    return this.canEdit ? [...this.baseColumns, 'actions'] : this.baseColumns;
-  }
+  displayedColumns: string[] = ['fullname', 'age', 'dni', 'average', 'actions'];
+
   eliminarEstudiante(estudiante: Student) {
     this.eliminar.emit(estudiante);
   }

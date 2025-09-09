@@ -8,7 +8,8 @@ import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { authReducer } from './core/auth/store/auth.reducer';
-import * as AuthEffects from './core/auth/store/auth.effects';
+import { authEffects } from './core/auth/store/auth.effects'; 
+
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -18,6 +19,6 @@ export const appConfig: ApplicationConfig = {
     //provideClientHydration(withEventReplay()),
     provideHttpClient(withFetch()),
     provideStore({ auth: authReducer }),
-    provideEffects(AuthEffects)
+    provideEffects(authEffects)
   ]
 };

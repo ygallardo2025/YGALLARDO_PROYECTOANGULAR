@@ -29,7 +29,8 @@ export const login$ = createEffect(
           )
         )
       )
-    )
+    ),
+  { functional: true } // 👈 IMPORTANTE
 );
 
 export const loginSuccess$ = createEffect(
@@ -41,7 +42,7 @@ export const loginSuccess$ = createEffect(
       ofType(AuthActions.login),
       tap(() => router.navigate(['/', RoutePath.Dashboard]))
     ),
-  { dispatch: false }
+  { functional: true, dispatch: false } // 👈 IMPORTANTE
 );
 
 export const logout$ = createEffect(
@@ -57,5 +58,8 @@ export const logout$ = createEffect(
         router.navigate(['/', RoutePath.Login]);
       })
     ),
-  { dispatch: false }
+  { functional: true, dispatch: false } // 👈 IMPORTANTE
 );
+
+// 👇 Exporta un OBJETO con tus efectos funcionales
+export const authEffects = { login$, loginSuccess$, logout$ };

@@ -33,6 +33,8 @@
     "@angular/ssr": "^20.1.1",
     "bootstrap": "^5.3.7",
     "express": "^5.1.0",
+    "@ngrx/effects": "^18.0.0",
+    "@ngrx/store": "^18.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0"
   },

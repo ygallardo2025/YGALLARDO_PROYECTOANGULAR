@@ -5,6 +5,8 @@ import { Router, NavigationEnd } from '@angular/router';
 import { filter, map, startWith, distinctUntilChanged, combineLatest, Observable } from 'rxjs';
 import { LayoutService } from '../core/layout/layout.services';
 import { AuthService } from '../core/auth/auth.service';
+import { Store } from '@ngrx/store';
+import * as AuthActions from '../core/auth/store/auth.actions';
 import { User } from '../shared/entities';
 
 type Vm = {
@@ -25,6 +27,7 @@ export class Toolbar implements OnInit {
   private router = inject(Router);
   private layout = inject(LayoutService);
   private auth = inject(AuthService);
+  private store: Store = inject(Store);
 
   vm$!: Observable<Vm>;
 
@@ -51,5 +54,5 @@ export class Toolbar implements OnInit {
 
   toggleSidebar(): void { this.layout.toggleSidebar(); }
   login(): void { this.router.navigate(['/login']); }
-  logout(): void { this.auth.logout(); this.router.navigate(['/login']); }
+  logout(): void { this.store.dispatch(AuthActions.logout()); }
 }

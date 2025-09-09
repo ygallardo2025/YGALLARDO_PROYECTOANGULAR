@@ -5,14 +5,14 @@
     <label class="form-label">Título</label>
     <input type="text" class="form-control" formControlName="title"
            [class.is-invalid]="courseForm.get('title')?.invalid && courseForm.get('title')?.touched">
-    <div class="invalid-feedback">{{ getErrorMessage('title') }}</div>
+    <div class="invalid-feedback">{{ courseForm | errorMessage:'title'}}</div>
   </div>
 
   <div class="mb-3">
     <label class="form-label">Descripción</label>
     <textarea class="form-control" rows="3" formControlName="description"
               [class.is-invalid]="courseForm.get('description')?.invalid && courseForm.get('description')?.touched"></textarea>
-    <div class="invalid-feedback">{{ getErrorMessage('description') }}</div>
+    <div class="invalid-feedback">{{ courseForm | errorMessage:'description'}}</div>
   </div>
 
   <button type="submit" class="btn btn-success me-2">Guardar</button>

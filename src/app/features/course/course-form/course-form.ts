@@ -2,11 +2,12 @@ import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Course } from '../../../shared/entities';
+import { ErrorMessagePipe } from '../../../shared/pipes/error-message.pipe';
 
 @Component({
   selector: 'app-course-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, ErrorMessagePipe],
   templateUrl: './course-form.html',
   styleUrls: ['./course-form.scss']
 })
